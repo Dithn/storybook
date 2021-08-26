@@ -1,13 +1,13 @@
 {
   "name": "@storybook/addon-storysource",
-  "version": "6.2.0-alpha.28",
+  "version": "6.4.0-alpha.32",
   "description": "View a story’s source code to see how it works and paste into your app",
   "keywords": [
     "addon",
     "storybook",
     "code"
   ],
-  "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/storysource",
+  "homepage": "https://github.com/storybookjs/storybook/tree/main/addons/storysource",
   "bugs": {
     "url": "https://github.com/storybookjs/storybook/issues"
   },
@@ -15,6 +15,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/storysource"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -37,17 +41,17 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.28",
-    "@storybook/api": "6.2.0-alpha.28",
-    "@storybook/client-logger": "6.2.0-alpha.28",
-    "@storybook/components": "6.2.0-alpha.28",
-    "@storybook/router": "6.2.0-alpha.28",
-    "@storybook/source-loader": "6.2.0-alpha.28",
-    "@storybook/theming": "6.2.0-alpha.28",
+    "@storybook/addons": "6.4.0-alpha.32",
+    "@storybook/api": "6.4.0-alpha.32",
+    "@storybook/client-logger": "6.4.0-alpha.32",
+    "@storybook/components": "6.4.0-alpha.32",
+    "@storybook/router": "6.4.0-alpha.32",
+    "@storybook/source-loader": "6.4.0-alpha.32",
+    "@storybook/theming": "6.4.0-alpha.32",
     "core-js": "^3.8.2",
-    "estraverse": "^4.3.0",
+    "estraverse": "^5.2.0",
     "loader-utils": "^2.0.0",
-    "prettier": "~2.2.1",
+    "prettier": "^2.2.1",
     "prop-types": "^15.7.2",
     "react-syntax-highlighter": "^13.5.3",
     "regenerator-runtime": "^0.13.7"
@@ -71,7 +75,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46",
+  "gitHead": "ee3198a84adf021e9214b929da9f59c525d8adc6",
+  "sbmodern": "dist/modern/index.js",
   "storybook": {
     "displayName": "Storysource",
     "icon": "https://user-images.githubusercontent.com/263385/101991675-48cdf300-3c7c-11eb-9400-58de5ac6daa7.png",

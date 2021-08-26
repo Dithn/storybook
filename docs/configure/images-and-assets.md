@@ -15,8 +15,16 @@ Afterwards you can use any asset in your stories:
 <CodeSnippets
   paths={[
     'react/component-story-static-asset-with-import.js.mdx',
-    'vue/component-story-static-asset-with-import.js.mdx',
+    'react/component-story-static-asset-with-import.mdx.mdx',
+    'vue/component-story-static-asset-with-import.2.js.mdx',
+    'vue/component-story-static-asset-with-import.mdx-2.mdx.mdx',
+    'vue/component-story-static-asset-with-import.3.js.mdx',
+    'vue/component-story-static-asset-with-import.mdx-3.mdx.mdx',
     'angular/component-story-static-asset-with-import.ts.mdx',
+    'angular/component-story-static-asset-with-import.mdx.mdx',
+    'svelte/component-story-static-asset-with-import.js.mdx',
+    'svelte/component-story-static-asset-with-import.native-format.mdx',
+    'svelte/component-story-static-asset-with-import.mdx.mdx',
   ]}
 />
 
@@ -30,9 +38,19 @@ Configure a directory (or a list of directories) where your assets live when sta
 
 ```json
 {
-    "scripts": {
-        "start-storybook": "start-storybook -s ./public -p 9001"
-    }
+  "scripts": {
+    "start-storybook": "start-storybook -s ./public -p 9001"
+  }
+}
+```
+
+Or when building your Storybook with `build-storybook`:
+
+```json
+{
+  "scripts": {
+    "build-storybook": "build-storybook -s public"
+  }
 }
 ```
 
@@ -43,8 +61,14 @@ Here `./public` is your static directory. Now use it in a component or story lik
 <CodeSnippets
   paths={[
     'react/component-story-static-asset-without-import.js.mdx',
+    'react/component-story-static-asset-without-import.mdx.mdx',
     'vue/component-story-static-asset-without-import.js.mdx',
+    'vue/component-story-static-asset-without-import.mdx.mdx',
     'angular/component-story-static-asset-without-import.ts.mdx',
+    'angular/component-story-static-asset-without-import.mdx.mdx',
+    'svelte/component-story-static-asset-without-import.js.mdx',
+    'svelte/component-story-static-asset-without-import.native-format.mdx',
+    'svelte/component-story-static-asset-without-import.mdx.mdx',
   ]}
 />
 
@@ -54,9 +78,18 @@ You can also pass a list of directories separated by commas without spaces inste
 
 ```json
 {
-    "scripts": {
-        "start-storybook": "start-storybook -s ./public,./static -p 9001"
-    }
+  "scripts": {
+    "start-storybook": "start-storybook -s ./public,./static -p 9001"
+  }
+}
+```
+The same can be applied when you're building your Storybook.
+
+```json
+{
+  "scripts": {
+    "build-storybook": "build-storybook -s ./public,./static -p 9001"
+  }
 }
 ```
 
@@ -69,8 +102,14 @@ Upload your files to an online CDN and reference them. In this example we’re u
 <CodeSnippets
   paths={[
     'react/component-story-static-asset-cdn.js.mdx',
+    'react/component-story-static-asset-cdn.mdx.mdx',
     'vue/component-story-static-asset-cdn.js.mdx',
+    'vue/component-story-static-asset-cdn.mdx.mdx',
     'angular/component-story-static-asset-cdn.ts.mdx',
+    'angular/component-story-static-asset-cdn.mdx.mdx',
+    'svelte/component-story-static-asset-cdn.js.mdx',
+    'svelte/component-story-static-asset-cdn.native-format.mdx',
+    'svelte/component-story-static-asset-cdn.mdx.mdx',
   ]}
 />
 

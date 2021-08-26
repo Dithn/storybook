@@ -4,6 +4,7 @@ import React, {
   FunctionComponent,
   ReactElement,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -157,6 +158,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       path,
       refId,
       viewMode = props.docsMode ? 'docs' : 'story',
+      singleStory,
       storyId,
       docsMode,
       navigate,
@@ -167,7 +169,7 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       setState: (stateChange: Partial<State>, callback) => this.setState(stateChange, callback),
     });
 
-    const routeData = { location, path, viewMode, storyId, refId };
+    const routeData = { location, path, viewMode, singleStory, storyId, refId };
 
     // Initialize the state to be the initial (persisted) state of the store.
     // This gives the modules the chance to read the persisted state, apply their defaults
@@ -437,12 +439,16 @@ export function useArgs(): [Args, (newArgs: Args) => void, (argNames?: string[])
 
   const data = getCurrentStoryData();
   const args = isStory(data) ? data.args : {};
+  const updateArgs = useCallback((newArgs: Args) => updateStoryArgs(data as Story, newArgs), [
+    data,
+    updateStoryArgs,
+  ]);
+  const resetArgs = useCallback((argNames?: string[]) => resetStoryArgs(data as Story, argNames), [
+    data,
+    resetStoryArgs,
+  ]);
 
-  return [
-    args,
-    (newArgs: Args) => updateStoryArgs(data as Story, newArgs),
-    (argNames?: string[]) => resetStoryArgs(data as Story, argNames),
-  ];
+  return [args, updateArgs, resetArgs];
 }
 
 export function useGlobals(): [Args, (newGlobals: Args) => void] {

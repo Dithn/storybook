@@ -61,7 +61,6 @@ By default, Storybook will render a free text input for the `variant` arg:
 
 ![Essential addon Controls using a string](addon-controls-args-variant-string.png)
 
-
 This works as long as you type a valid string into the auto-generated text control, but it's not the best UI for our scenario, given that the component only accepts `primary` or `secondary` as variants. Let’s replace it with Storybook’s radio component.
 
 We can specify which controls get used by declaring a custom [argType](../api/argtypes.md) for the `variant` property. ArgTypes encode basic metadata for args, such as name, description, defaultValue for an arg. These get automatically filled in by Storybook Docs.
@@ -87,18 +86,18 @@ This replaces the input with a radio group for a more intuitive experience.
 
 For a few types, Controls will automatically infer them by using [regex](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp). You can change the matchers for a regex that suits you better.
 
-| Data Type   | Default regex | Description |
-| :---------- | :----------: | :--------------------------------------------------------------------- |
-| **color**   | `/(background\|color)$/i` | will display a color picker UI for the args that match it |
-| **date**    | `/Date$/`                 | will display a date picker UI for the args that match it  |
-
+| Data type |       Default regex       |                        Description                        |
+| :-------: | :-----------------------: | :-------------------------------------------------------: |
+| **color** | `/(background\|color)$/i` | Will display a color picker UI for the args that match it |
+| **date**  |         `/Date$/`         | Will display a date picker UI for the args that match it  |
 
 To do so, use the `matchers` property in `controls` parameter:
+
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'storybook-addon-controls-custom-matchers.js.mdx',
+    'common/storybook-addon-controls-custom-matchers.js.mdx',
   ]}
 />
 
@@ -114,8 +113,13 @@ Up until now, we only used auto-generated controls based on the component we're 
   paths={[
     'react/table-story-fully-customize-controls.js.mdx',
     'react/table-story-fully-customize-controls.mdx.mdx',
-    'vue/table-story-fully-customize-controls.js.mdx',
+    'vue/table-story-fully-customize-controls.2.js.mdx',
+    'vue/table-story-fully-customize-controls.mdx-2.mdx.mdx',
+    'vue/table-story-fully-customize-controls.3.js.mdx',
+    'vue/table-story-fully-customize-controls.mdx-3.mdx.mdx',
     'angular/table-story-fully-customize-controls.ts.mdx',
+    'angular/table-story-fully-customize-controls.mdx.mdx',
+    'svelte/table-story-fully-customize-controls.native-format.mdx',
   ]}
 />
 
@@ -127,9 +131,13 @@ By default, Storybook will add controls for all args that:
 
 - Appear in the list of args for your story.
 
-You can determine the control by using `argTypes` in each case.
+Using `argTypes`, you can change the display and behavior of each control.
 
-As they can be complex cases:
+### Dealing with complex values
+
+You'll notice when dealing with non-primitive values, you'll run into some limitations. The most obvious issue is that not every value can be represented as part of the `args` param in the URL, losing the ability to share and deeplink to such a state. Beyond that, complex values such as JSX cannot be synchronized between the manager (e.g. Controls addon) and the preview (your story).
+
+One way to deal with this is to use primitive values (e.g. strings) as arg values, and using a story template to convert these values to their complex counterpart before rendering. This isn't the nicest way to do it (see below), but certainly the most flexible.
 
 <!-- prettier-ignore-start -->
 
@@ -138,28 +146,30 @@ As they can be complex cases:
     'react/component-story-custom-args-complex.js.mdx',
     'react/component-story-custom-args-complex.ts.mdx',
     'react/component-story-custom-args-complex.mdx.mdx',
-     'vue/component-story-custom-args-complex.js.mdx',
-     'angular/component-story-custom-args-complex.ts.mdx',
+    'vue/component-story-custom-args-complex.3.js.mdx',
+    'vue/component-story-custom-args-complex.mdx-3.mdx.mdx',
+    'angular/component-story-custom-args-complex.ts.mdx',
+    'angular/component-story-custom-args-complex.mdx.mdx',
+    'svelte/component-story-custom-args-complex.js.mdx',
+    'svelte/component-story-custom-args-complex.native-format.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
-Or even with certain types of elements, such as icons:
+Unless you need the flexibility of a function, an easier way to map primitives to complex values before rendering is to define a `mapping`. Additionally, you can specify `control.labels` to configure custom labels for your checkbox, radio or select input.
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'react/component-story-custom-args-icons.js.mdx',
-    'react/component-story-custom-args-icons.ts.mdx',
-    'react/component-story-custom-args-icons.mdx.mdx',
-    'vue/component-story-custom-args-icons.js.mdx',
-    'angular/component-story-custom-args-icons.ts.mdx',
+    'common/component-story-custom-args-mapping.js.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
+
+Note that both `mapping` and `control.labels` don't have to be exhaustive. If the currently selected option is not listed, it will be used verbatim.
 
 ## Configuration
 
@@ -174,42 +184,23 @@ As shown above, you can configure individual controls with the “control" annot
 
 Here is the full list of available controls you can use:
 
-| Data Type   | Control Type | Description                                                    |    Options     |
-| :---------- | :----------: | :------------------------------------------------------------- | :------------: |
-| **array**   |    array     | serialize array into a comma-separated string inside a textbox |   separator    |
-|             |     file     | a file input that gives you a array of urls                    |     accept     |
-| **boolean** |   boolean    | checkbox input                                                 |       -        |
-| **number**  |    number    | a numeric text box input                                       | min, max, step |
-|             |    range     | a range slider input                                           | min, max, step |
-| **object**  |    object    | json editor text input                                         |       -        |
-| **enum**    |    radio     | radio buttons input                                            |    options     |
-|             | inline-radio | inline radio buttons input                                     |    options     |
-|             |    check     | multi-select checkbox input                                    |    options     |
-|             | inline-check | multi-select inline checkbox input                             |    options     |
-|             |    select    | select dropdown input                                          |    options     |
-|             | multi-select | multi-select dropdown input                                    |    options     |
-| **string**  |     text     | simple text input                                              |       -        |
-|             |    color     | color picker input that assumes strings are color values       |       -        |
-|             |     date     | date picker input                                              |       -        |
-
-If you need to customize a control to use a enum data type in your story, for instance the `inline-radio` you can do it like so:
-
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/widget-story-controls-enum.js.mdx',
-    'common/widget-story-controls-enum.mdx.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
-
-<div class="aside">
-If you don't provide a specific one, it defaults to:
-- a radio type for enums with 5 or less elements
-- a select control type with more than 5 elements
-</div>
+| Data Type   | Control Type | Description                                              |    Options     |
+| :---------- | :----------: | :------------------------------------------------------- | :------------: |
+| **boolean** |   boolean    | checkbox input                                           |       -        |
+| **number**  |    number    | a numeric text box input                                 | min, max, step |
+|             |    range     | a range slider input                                     | min, max, step |
+| **object**  |    object    | json editor text input                                   |       -        |
+| **array**   |    object    | json editor text input                                   |       -        |
+|             |     file     | a file input that gives you a array of urls              |     accept     |
+| **enum**    |    radio     | radio buttons input                                      |       -        |
+|             | inline-radio | inline radio buttons input                               |       -        |
+|             |    check     | multi-select checkbox input                              |       -        |
+|             | inline-check | multi-select inline checkbox input                       |       -        |
+|             |    select    | select dropdown input                                    |       -        |
+|             | multi-select | multi-select dropdown input                              |       -        |
+| **string**  |     text     | simple text input                                        |       -        |
+|             |    color     | color picker input that assumes strings are color values |  presetColors  |
+|             |     date     | date picker input                                        |       -        |
 
 If you need to customize a control for a number data type in your story, you can do it like so:
 
@@ -251,6 +242,26 @@ To enable expanded mode globally, add the following to [`.storybook/preview.js`]
 And here's what the resulting UI looks like:
 
 ![Controls addon expanded](./addon-controls-expanded.png)
+
+### Specify initial preset color swatches
+
+For `color` controls, you can specify an array of `presetColors`, either on the `control` in `argTypes`, or as a parameter under the `controls` namespace:
+
+```js
+// .storybook/preview.js
+
+export const parameters = {
+  controls: {
+    presetColors: [
+      { color: '#ff4785', title: 'Coral' },
+      'rgba(0, 159, 183, 1)',
+      '#fe4a49',
+    ]
+  },
+};
+```
+
+These will then be available as swatches in the color picker. Color presets can be defined as an object with `color` and `title`, or as a simple CSS color string. The `title` will be shown when you hover over the color swatch. In case no title is specified, the nearest CSS color name will be used instead.
 
 ### Disable controls for specific properties
 
@@ -318,10 +329,27 @@ Consider the following story snippets:
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
-paths={[
-'common/component-story-disable-controls-regex.js.mdx',
-'common/component-story-disable-controls-regex.mdx.mdx'
-]}
+  paths={[
+    'common/component-story-disable-controls-regex.js.mdx',
+    'common/component-story-disable-controls-regex.mdx.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+## Sorting controls
+
+By default, controls are unsorted and use whatever order the args data is processed in (`none`). It can also be configured to sort alphabetically by arg name (`alpha`) or alphabetically required args first (`requiredFirst`).
+
+Consider the following snippet to force required args first:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/component-story-sort-controls.js.mdx',
+    'common/component-story-sort-controls.mdx.mdx'
+  ]}
 />
 
 <!-- prettier-ignore-end -->

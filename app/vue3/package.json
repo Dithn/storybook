@@ -1,11 +1,11 @@
 {
   "name": "@storybook/vue3",
-  "version": "6.2.0-alpha.28",
+  "version": "6.4.0-alpha.32",
   "description": "Storybook for Vue 3: Develop Vue 3 Components in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
   ],
-  "homepage": "https://github.com/storybookjs/storybook/tree/master/app/vue3",
+  "homepage": "https://github.com/storybookjs/storybook/tree/main/app/vue3",
   "bugs": {
     "url": "https://github.com/storybookjs/storybook/issues"
   },
@@ -13,6 +13,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "app/vue3"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "main": "dist/cjs/client/index.js",
@@ -41,8 +45,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.28",
-    "@storybook/core": "6.2.0-alpha.28",
+    "@storybook/addons": "6.4.0-alpha.32",
+    "@storybook/core": "6.4.0-alpha.32",
+    "@storybook/core-common": "6.4.0-alpha.32",
     "@types/webpack-env": "^1.16.0",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
@@ -51,24 +56,22 @@
     "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
-    "ts-loader": "^6.2.2",
-    "vue-docgen-api": "^4.34.2",
+    "ts-loader": "^8.0.14",
+    "vue-docgen-api": "^4.38.0",
     "vue-docgen-loader": "^1.5.0",
-    "webpack": "^4.46.0"
+    "vue-loader": "^16.0.0",
+    "webpack": "4"
   },
   "devDependencies": {
     "@types/node": "^14.14.20",
-    "@types/webpack": "^4.41.26",
     "@vue/compiler-sfc": "^3.0.0",
-    "vue": "^3.0.0",
-    "vue-loader": "^16.0.0"
+    "vue": "^3.0.0"
   },
   "peerDependencies": {
     "@babel/core": "*",
     "@vue/compiler-sfc": "^3.0.0",
     "babel-loader": "^7.0.0 || ^8.0.0",
-    "vue": "^3.0.0",
-    "vue-loader": "^16.0.0"
+    "vue": "^3.0.0"
   },
   "engines": {
     "node": ">=10.13.0"
@@ -76,5 +79,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46"
+  "gitHead": "ee3198a84adf021e9214b929da9f59c525d8adc6",
+  "sbmodern": "dist/modern/client/index.js"
 }

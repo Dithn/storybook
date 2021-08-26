@@ -1,11 +1,19 @@
-import { Group, Story, StoriesHash, isRoot, isStory } from '@storybook/api';
+import type { Group, Story, StoriesHash } from '@storybook/api';
+import { isRoot, isStory } from '@storybook/api';
 import { styled } from '@storybook/theming';
-import { Icons } from '@storybook/components';
+import { Button, Icons } from '@storybook/components';
 import { transparentize } from 'polished';
 import React, { MutableRefObject, useCallback, useMemo, useRef } from 'react';
 
-import { ComponentNode, DocumentNode, GroupNode, RootNode, StoryNode } from './TreeNode';
-import { useExpanded, ExpandAction } from './useExpanded';
+import {
+  ComponentNode,
+  DocumentNode,
+  GroupNode,
+  RootNode,
+  StoryNode,
+  CollapseIcon,
+} from './TreeNode';
+import { useExpanded, ExpandAction, ExpandedState } from './useExpanded';
 import { Highlight, Item } from './types';
 import { createId, getAncestorIds, getDescendantIds, getLink } from './utils';
 
@@ -16,6 +24,7 @@ export const Action = styled.button(({ theme }) => ({
   width: 20,
   height: 20,
   margin: 0,
+  marginLeft: 'auto',
   padding: 0,
   outline: 0,
   lineHeight: 'normal',
@@ -30,15 +39,84 @@ export const Action = styled.button(({ theme }) => ({
       : transparentize(0.6, theme.color.defaultText),
 
   '&:hover': {
-    color: theme.barSelectedColor,
+    color: theme.color.secondary,
   },
   '&:focus': {
-    color: theme.barSelectedColor,
+    color: theme.color.secondary,
     borderColor: theme.color.secondary,
+
+    '&:not(:focus-visible)': {
+      borderColor: 'transparent',
+    },
   },
+
   svg: {
     width: 10,
     height: 10,
+  },
+}));
+
+const CollapseButton = styled.button(({ theme }) => ({
+  // Reset button
+  background: 'transparent',
+  border: 'none',
+  outline: 'none',
+  boxSizing: 'content-box',
+  cursor: 'pointer',
+  position: 'relative',
+  textAlign: 'left',
+  lineHeight: 'normal',
+  font: 'inherit',
+  color: 'inherit',
+  letterSpacing: 'inherit',
+  textTransform: 'inherit',
+
+  display: 'flex',
+  flex: '0 1 auto',
+  padding: '3px 10px 1px 1px',
+  margin: 0,
+  marginLeft: -19,
+  overflow: 'hidden',
+  borderRadius: 26,
+  transition: 'color 150ms, box-shadow 150ms',
+
+  'span:first-of-type': {
+    marginTop: 4,
+    marginRight: 7,
+  },
+
+  '&:focus': {
+    boxShadow: `0 0 0 1px ${theme.color.secondary}`,
+    color: theme.color.secondary,
+    'span:first-of-type': {
+      color: theme.color.secondary,
+    },
+
+    '&:not(:focus-visible)': {
+      boxShadow: 'none',
+    },
+  },
+}));
+
+const LeafNodeStyleWrapper = styled.div(({ theme }) => ({
+  position: 'relative',
+}));
+
+const SkipToContentLink = styled(Button)(({ theme }) => ({
+  display: 'none',
+  '@media (min-width: 600px)': {
+    display: 'block',
+    zIndex: -1,
+    position: 'absolute',
+    top: 1,
+    right: 20,
+    height: '20px',
+    fontSize: '10px',
+    padding: '5px 10px',
+    '&:focus': {
+      background: 'white',
+      zIndex: 1,
+    },
   },
 }));
 
@@ -74,25 +152,32 @@ const Node = React.memo<NodeProps>(
     if (isStory(item)) {
       const LeafNode = item.isComponent ? DocumentNode : StoryNode;
       return (
-        <LeafNode
-          key={id}
-          id={id}
-          className="sidebar-item"
-          data-ref-id={refId}
-          data-item-id={item.id}
-          data-parent-id={item.parent}
-          data-nodetype={item.isComponent ? 'document' : 'story'}
-          data-selected={isSelected}
-          data-highlightable={isDisplayed}
-          depth={isOrphan ? item.depth : item.depth - 1}
-          href={getLink(item.id, refId)}
-          onClick={(event) => {
-            event.preventDefault();
-            onSelectStoryId(item.id);
-          }}
-        >
-          {item.name}
-        </LeafNode>
+        <LeafNodeStyleWrapper>
+          <LeafNode
+            key={id}
+            id={id}
+            className="sidebar-item"
+            data-ref-id={refId}
+            data-item-id={item.id}
+            data-parent-id={item.parent}
+            data-nodetype={item.isComponent ? 'document' : 'story'}
+            data-selected={isSelected}
+            data-highlightable={isDisplayed}
+            depth={isOrphan ? item.depth : item.depth - 1}
+            href={getLink(item.id, refId)}
+            onClick={(event) => {
+              event.preventDefault();
+              onSelectStoryId(item.id);
+            }}
+          >
+            {item.renderLabel?.(item) || item.name}
+          </LeafNode>
+          {isSelected && (
+            <SkipToContentLink secondary outline isLink href="#storybook-preview-wrapper">
+              Skip to canvas
+            </SkipToContentLink>
+          )}
+        </LeafNodeStyleWrapper>
       );
     }
 
@@ -105,20 +190,34 @@ const Node = React.memo<NodeProps>(
           data-ref-id={refId}
           data-item-id={item.id}
           data-nodetype="root"
+          aria-expanded={isExpanded}
         >
-          {item.name}
-          <Action
+          <CollapseButton
             type="button"
-            className="sidebar-subheading-action"
-            data-action="expand-all"
-            data-expanded={isFullyExpanded}
+            data-action="collapse-root"
             onClick={(event) => {
               event.preventDefault();
-              setFullyExpanded();
+              setExpanded({ ids: [item.id], value: !isExpanded });
             }}
           >
-            <Icons icon={isFullyExpanded ? 'collapse' : 'expandalt'} />
-          </Action>
+            <CollapseIcon isExpanded={isExpanded} />
+            {item.renderLabel?.(item) || item.name}
+          </CollapseButton>
+          {isExpanded && (
+            <Action
+              type="button"
+              className="sidebar-subheading-action"
+              aria-label="expand"
+              data-action="expand-all"
+              data-expanded={isFullyExpanded}
+              onClick={(event) => {
+                event.preventDefault();
+                setFullyExpanded();
+              }}
+            >
+              <Icons icon={isFullyExpanded ? 'collapse' : 'expandalt'} />
+            </Action>
+          )}
         </RootNode>
       );
     }
@@ -146,7 +245,7 @@ const Node = React.memo<NodeProps>(
           if (item.isComponent && !isExpanded) onSelectStoryId(item.id);
         }}
       >
-        {item.name}
+        {item.renderLabel?.(item) || item.name}
       </BranchNode>
     );
   }
@@ -197,16 +296,17 @@ export const Tree = React.memo<{
     const containerRef = useRef<HTMLDivElement>(null);
 
     // Find top-level nodes and group them so we can hoist any orphans and expand any roots.
-    const [rootIds, orphanIds] = useMemo(
+    const [rootIds, orphanIds, initialExpanded] = useMemo(
       () =>
-        Object.keys(data).reduce<[string[], string[]]>(
+        Object.keys(data).reduce<[string[], string[], ExpandedState]>(
           (acc, id) => {
             const item = data[id];
             if (isRoot(item)) acc[0].push(id);
             else if (!item.parent) acc[1].push(id);
+            if (isRoot(item) && item.startCollapsed) acc[2][id] = false;
             return acc;
           },
-          [[], []]
+          [[], [], {}]
         ),
       [data]
     );
@@ -277,6 +377,7 @@ export const Tree = React.memo<{
       isBrowsing, // only enable keyboard shortcuts when tree is visible
       refId,
       data: collapsedData,
+      initialExpanded,
       rootIds,
       highlightedRef,
       setHighlightedItemId,

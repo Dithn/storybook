@@ -1,11 +1,11 @@
 {
   "name": "@storybook/react",
-  "version": "6.2.0-alpha.28",
+  "version": "6.4.0-alpha.32",
   "description": "Storybook for React: Develop React Component in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
   ],
-  "homepage": "https://github.com/storybookjs/storybook/tree/master/app/react",
+  "homepage": "https://github.com/storybookjs/storybook/tree/main/app/react",
   "bugs": {
     "url": "https://github.com/storybookjs/storybook/issues"
   },
@@ -13,6 +13,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "app/react"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "main": "dist/cjs/client/index.js",
@@ -44,10 +48,12 @@
   "dependencies": {
     "@babel/preset-flow": "^7.12.1",
     "@babel/preset-react": "^7.12.10",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.2",
-    "@storybook/addons": "6.2.0-alpha.28",
-    "@storybook/core": "6.2.0-alpha.28",
-    "@storybook/node-logger": "6.2.0-alpha.28",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.0-rc.2",
+    "@storybook/addons": "6.4.0-alpha.32",
+    "@storybook/core": "6.4.0-alpha.32",
+    "@storybook/core-common": "6.4.0-alpha.32",
+    "@storybook/node-logger": "6.4.0-alpha.32",
+    "@storybook/react-docgen-typescript-plugin": "1.0.2-canary.253f8c1.0",
     "@storybook/semver": "^7.3.2",
     "@types/webpack-env": "^1.16.0",
     "babel-plugin-add-react-displayname": "^0.0.5",
@@ -57,19 +63,17 @@
     "global": "^4.4.0",
     "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
-    "react-dev-utils": "^11.0.1",
-    "react-docgen-typescript-plugin": "^0.6.2",
-    "react-refresh": "^0.8.3",
+    "react-dev-utils": "^11.0.3",
+    "react-refresh": "^0.10.0",
     "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
-    "webpack": "^4.46.0"
+    "webpack": "4"
   },
   "devDependencies": {
-    "@storybook/client-api": "6.2.0-alpha.28",
+    "@storybook/client-api": "6.4.0-alpha.32",
     "@types/node": "^14.14.20",
-    "@types/prompts": "^2.0.9",
-    "@types/webpack": "^4.41.26"
+    "@types/prompts": "^2.0.9"
   },
   "peerDependencies": {
     "@babel/core": "^7.11.5",
@@ -90,5 +94,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46"
+  "gitHead": "ee3198a84adf021e9214b929da9f59c525d8adc6",
+  "sbmodern": "dist/modern/client/index.js"
 }

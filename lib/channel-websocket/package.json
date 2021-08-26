@@ -1,11 +1,11 @@
 {
   "name": "@storybook/channel-websocket",
-  "version": "6.2.0-alpha.28",
+  "version": "6.4.0-alpha.32",
   "description": "",
   "keywords": [
     "storybook"
   ],
-  "homepage": "https://github.com/storybookjs/storybook/tree/master/lib/channel-websocket",
+  "homepage": "https://github.com/storybookjs/storybook/tree/main/lib/channel-websocket",
   "bugs": {
     "url": "https://github.com/storybookjs/storybook/issues"
   },
@@ -13,6 +13,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "lib/channel-websocket"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "sideEffects": false,
@@ -36,13 +40,14 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/channels": "6.2.0-alpha.28",
+    "@storybook/channels": "6.4.0-alpha.32",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
-    "telejson": "^5.1.0"
+    "telejson": "^5.3.2"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46"
+  "gitHead": "ee3198a84adf021e9214b929da9f59c525d8adc6",
+  "sbmodern": "dist/modern/index.js"
 }

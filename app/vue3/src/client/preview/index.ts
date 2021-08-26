@@ -14,8 +14,6 @@ import { IStorybookSection, StoryFnVueReturnType } from './types';
 
 import render, { storybookApp } from './render';
 
-const PROPS = 'STORYBOOK_PROPS';
-
 /*
   This normalizes a functional component into a render method in ComponentOptions.
 
@@ -26,7 +24,9 @@ function normalizeFunctionalComponent(options: ConcreteComponent): ComponentOpti
   return typeof options === 'function' ? { render: options, name: options.name } : options;
 }
 
-function prepare(story: StoryFnVueReturnType, innerStory?: ConcreteComponent): Component | null {
+function prepare(rawStory: StoryFnVueReturnType, innerStory?: ConcreteComponent): Component | null {
+  const story = rawStory as ComponentOptions;
+
   if (story == null) {
     return null;
   }
@@ -35,32 +35,13 @@ function prepare(story: StoryFnVueReturnType, innerStory?: ConcreteComponent): C
     return {
       // Normalize so we can always spread an object
       ...normalizeFunctionalComponent(story),
-      components: { story: innerStory },
-      props: innerStory.props,
-      inject: {
-        props: {
-          from: PROPS,
-          default: null,
-        },
-      },
-      provide() {
-        return {
-          [PROPS]: this.props || this.$props,
-        };
-      },
+      components: { ...(story.components || {}), story: innerStory },
     };
   }
 
   return {
-    props: story.props,
-    inject: {
-      props: {
-        from: PROPS,
-        default: null,
-      },
-    },
     render() {
-      return h(story, this.props || this.$props);
+      return h(story);
     },
   };
 }

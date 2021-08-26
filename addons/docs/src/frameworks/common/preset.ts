@@ -3,10 +3,10 @@ import remarkSlug from 'remark-slug';
 import remarkExternalLinks from 'remark-external-links';
 
 // @ts-ignore
-import createCompiler from '../../mdx/mdx-compiler-plugin';
+import { createCompiler } from '@storybook/csf-tools/mdx';
 
 const resolvedBabelLoader = require.resolve('babel-loader', {
-  paths: [require.resolve('@storybook/core')],
+  paths: [require.resolve('@storybook/builder-webpack4')], // FIXME!!!
 });
 
 // for frameworks that are not working with react, we need to configure
@@ -101,7 +101,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
           ],
         },
         {
-          test: /\.(stories|story)\.mdx$/,
+          test: /(stories|story)\.mdx$/,
           use: [
             {
               loader: resolvedBabelLoader,
@@ -118,7 +118,7 @@ export function webpack(webpackConfig: any = {}, options: any = {}) {
         },
         {
           test: /\.mdx$/,
-          exclude: /\.(stories|story)\.mdx$/,
+          exclude: /(stories|story)\.mdx$/,
           use: [
             {
               loader: resolvedBabelLoader,

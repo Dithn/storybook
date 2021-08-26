@@ -1,6 +1,6 @@
 import React from 'react';
 
-// NOTE: this is a copy of `lib/components/src/navigation/RoutedLink.js`.
+// NOTE: this is a copy of `lib/components/src/navigation/RoutedLink.tsx`.
 // It's duplicated here because that copy has an explicit dependency on
 // React 16.3+, which breaks older versions of React running in the preview.
 // The proper DRY solution is to create a new package that doesn't depend
@@ -12,10 +12,9 @@ const LEFT_BUTTON = 0;
 const isPlainLeftClick = (e: React.MouseEvent) =>
   e.button === LEFT_BUTTON && !e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey;
 
-const RoutedLink: React.FC<React.DetailedHTMLProps<
-  React.AnchorHTMLAttributes<HTMLAnchorElement>,
-  HTMLAnchorElement
->> = ({ href = '#', children, onClick, className, style }) => {
+const RoutedLink: React.FC<
+  React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>
+> = ({ href = '#', children, onClick, className, style }) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (isPlainLeftClick(e)) {
       e.preventDefault();

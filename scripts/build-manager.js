@@ -1,9 +1,15 @@
-const { buildStaticStandalone } = require('../lib/core/dist/cjs/server/build-static');
+const { buildStaticStandalone } = require('../lib/core-server/dist/cjs/build-static');
 
 process.env.NODE_ENV = 'production';
 
 buildStaticStandalone({
-  managerOnly: true,
-  outputDir: './lib/core/prebuilt',
+  ignorePreview: true,
+  outputDir: './lib/manager-webpack4/prebuilt',
+  configDir: './scripts/build-manager-config',
+});
+
+buildStaticStandalone({
+  ignorePreview: true,
+  outputDir: './lib/manager-webpack5/prebuilt',
   configDir: './scripts/build-manager-config',
 });

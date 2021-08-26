@@ -1,12 +1,12 @@
 {
   "name": "@storybook/source-loader",
-  "version": "6.2.0-alpha.28",
+  "version": "6.4.0-alpha.32",
   "description": "Source loader",
   "keywords": [
     "lib",
     "storybook"
   ],
-  "homepage": "https://github.com/storybookjs/storybook/tree/master/lib/source-loader",
+  "homepage": "https://github.com/storybookjs/storybook/tree/main/lib/source-loader",
   "bugs": {
     "url": "https://github.com/storybookjs/storybook/issues"
   },
@@ -14,6 +14,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "lib/source-loader"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "sideEffects": false,
@@ -37,17 +41,16 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.28",
-    "@storybook/client-logger": "6.2.0-alpha.28",
+    "@storybook/addons": "6.4.0-alpha.32",
+    "@storybook/client-logger": "6.4.0-alpha.32",
     "@storybook/csf": "0.0.1",
     "core-js": "^3.8.2",
-    "estraverse": "^4.3.0",
+    "estraverse": "^5.2.0",
     "global": "^4.4.0",
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.20",
-    "prettier": "~2.2.1",
-    "regenerator-runtime": "^0.13.7",
-    "source-map": "^0.7.3"
+    "prettier": "^2.2.1",
+    "regenerator-runtime": "^0.13.7"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -56,5 +59,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46"
+  "gitHead": "ee3198a84adf021e9214b929da9f59c525d8adc6",
+  "sbmodern": "dist/modern/index.js"
 }

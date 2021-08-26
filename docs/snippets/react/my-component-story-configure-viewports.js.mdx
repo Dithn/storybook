@@ -1,20 +1,21 @@
 ```js
-// MyComponent.stories.js | MyComponent.stories.ts
+// MyComponent.stories.js | MyComponent.stories.ts | MyComponent.stories.jsx | MyComponent.stories.tsx
 
 import React from 'react';
+
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 export default {
   title: 'Stories',
   parameters: {
-    // the viewports object from the Essentials addon
+    //👇 The viewports object from the Essentials addon
     viewport: {
-      // the viewports you want to use
+      //👇 The viewports you want to use
       viewports: INITIAL_VIEWPORTS,
-      // your own default viewport
+      //👇 Your own default viewport
       defaultViewport: 'iphone6'
     },
-  };
+  },
 };
 
 export const MyStory = () => <div />;

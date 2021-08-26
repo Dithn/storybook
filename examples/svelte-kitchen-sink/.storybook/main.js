@@ -19,7 +19,6 @@ module.exports = {
     },
     '@storybook/addon-controls',
     '@storybook/addon-links',
-    '@storybook/addon-knobs',
     '@storybook/addon-backgrounds',
     '@storybook/addon-viewport',
     '@storybook/addon-a11y',
@@ -27,10 +26,13 @@ module.exports = {
   webpackFinal: async (config) => {
     config.module.rules.push({
       test: [/\.stories\.js$/, /index\.js$/],
-      loaders: [require.resolve('@storybook/source-loader')],
+      use: [require.resolve('@storybook/source-loader')],
       include: [path.resolve(__dirname, '../src')],
       enforce: 'pre',
     });
     return config;
+  },
+  core: {
+    builder: 'webpack4',
   },
 };

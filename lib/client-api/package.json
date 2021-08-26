@@ -1,11 +1,11 @@
 {
   "name": "@storybook/client-api",
-  "version": "6.2.0-alpha.28",
+  "version": "6.4.0-alpha.32",
   "description": "Storybook Client API",
   "keywords": [
     "storybook"
   ],
-  "homepage": "https://github.com/storybookjs/storybook/tree/master/lib/client-api",
+  "homepage": "https://github.com/storybookjs/storybook/tree/main/lib/client-api",
   "bugs": {
     "url": "https://github.com/storybookjs/storybook/issues"
   },
@@ -13,6 +13,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "lib/client-api"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "sideEffects": false,
@@ -36,11 +40,11 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.28",
-    "@storybook/channel-postmessage": "6.2.0-alpha.28",
-    "@storybook/channels": "6.2.0-alpha.28",
-    "@storybook/client-logger": "6.2.0-alpha.28",
-    "@storybook/core-events": "6.2.0-alpha.28",
+    "@storybook/addons": "6.4.0-alpha.32",
+    "@storybook/channel-postmessage": "6.4.0-alpha.32",
+    "@storybook/channels": "6.4.0-alpha.32",
+    "@storybook/client-logger": "6.4.0-alpha.32",
+    "@storybook/core-events": "6.4.0-alpha.32",
     "@storybook/csf": "0.0.1",
     "@types/qs": "^6.9.5",
     "@types/webpack-env": "^1.16.0",
@@ -48,7 +52,7 @@
     "global": "^4.4.0",
     "lodash": "^4.17.20",
     "memoizerific": "^1.11.3",
-    "qs": "^6.9.5",
+    "qs": "^6.10.0",
     "regenerator-runtime": "^0.13.7",
     "stable": "^0.1.8",
     "store2": "^2.12.0",
@@ -62,5 +66,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "899ca0824d698925edcc519c7afc7408f7b1ab46"
+  "gitHead": "ee3198a84adf021e9214b929da9f59c525d8adc6",
+  "sbmodern": "dist/modern/index.js"
 }

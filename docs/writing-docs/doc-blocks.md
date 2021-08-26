@@ -2,6 +2,12 @@
 title: 'Doc Blocks'
 ---
 
+<div class="aside">
+
+💡 <strong>NOTE</strong>: Currently there's an issue when using MDX stories with IE11. This issue does <strong>not</strong> apply to [DocsPage](./docs-page.md). If you're interested in helping us fix this issue, read our <a href="https://github.com/storybookjs/storybook/blob/next/CONTRIBUTING.md">Contribution guidelines</a> and submit a pull request.
+
+</div>
+
 Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page.md) uses a combination of the blocks below to build a page for each of your components automatically.
 
 Custom [addons](../addons/writing-addons.md) can also provide their own doc blocks.
@@ -26,7 +32,8 @@ This is extremely useful, but it can be further expanded. Additional information
     'react/button-component-with-proptypes.js.mdx',
     'react/button-component-with-proptypes.ts.mdx',
     'angular/button-component-with-proptypes.ts.mdx',
-    'vue/button-component-with-proptypes.vue.mdx',
+    'vue/button-component-with-proptypes.2.mdx',
+    'vue/button-component-with-proptypes.3.mdx',
     'svelte/button-component-with-proptypes.js.mdx',
   ]}
 />
@@ -53,11 +60,25 @@ To use the `ArgsTable` in [DocsPage](./docs-page.md#component-parameter), export
 
 To use the `ArgsTable` block in MDX, add the following:
 
+#### For components
+
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'common/component-story-mdx-argstable-block.mdx.mdx',
+    'common/component-story-mdx-argstable-block-for-component.mdx.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+#### For Stories
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/component-story-mdx-argstable-block-for-story.mdx.mdx',
   ]}
 />
 
@@ -126,7 +147,9 @@ Looking at the following component:
     'react/button-implementation.js.mdx',
     'react/button-implementation.ts.mdx',
     'angular/button-implementation.ts.mdx',
-    'vue/button-implementation.vue.mdx'
+    'vue/button-implementation.2.mdx',
+    'vue/button-implementation.3.mdx',
+    'svelte/button-implementation.js.mdx',
   ]}
 />
 
@@ -242,8 +265,14 @@ As an example, if you had the following story:
   paths={[
     'react/button-story-default-docs-code.js.mdx',
     'react/button-story-default-docs-code.ts.mdx',
-    'vue/button-story-default-docs-code.js.mdx',
+    'react/button-story-default-docs-code.mdx.mdx',
+    'vue/button-story-default-docs-code.3.js.mdx',
+    'vue/button-story-default-docs-code.mdx-3.mdx.mdx',
     'angular/button-story-default-docs-code.ts.mdx',
+    'angular/button-story-default-docs-code.mdx.mdx',
+    'svelte/button-story-default-docs-code.js.mdx',
+    'svelte/button-story-default-docs-code.native-format.mdx',
+    'svelte/button-story-default-docs-code.mdx.mdx',
   ]}
 />
 
@@ -346,7 +375,11 @@ In MDX, the `Story` block is not only a way of displaying stories, but also the 
 
 <CodeSnippets
   paths={[
-    'common/component-story-mdx-story-by-name.mdx.mdx',
+    'react/component-story-mdx-story-by-name.mdx.mdx',
+    'angular/component-story-mdx-story-by-name.mdx.mdx',
+    'vue/component-story-mdx-story-by-name.mdx-2.mdx.mdx',
+    'vue/component-story-mdx-story-by-name.mdx-3.mdx.mdx',
+    'svelte/component-story-mdx-story-by-name.mdx.mdx',
   ]}
 />
 
@@ -388,7 +421,11 @@ In MDX, `Canvas` is more flexible: in addition to the DocsPage behavior, it can 
 
 <CodeSnippets
   paths={[
-    'common/mdx-canvas-multiple-stories.mdx.mdx',
+    'react/mdx-canvas-multiple-stories.mdx.mdx',
+    'angular/mdx-canvas-multiple-stories.mdx.mdx',
+    'vue/mdx-canvas-multiple-stories.mdx-2.mdx.mdx',
+    'vue/mdx-canvas-multiple-stories.mdx-3.mdx.mdx',
+    'svelte/mdx-canvas-multiple-stories.mdx.mdx',
   ]}
 />
 

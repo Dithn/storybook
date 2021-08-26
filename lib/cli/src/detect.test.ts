@@ -160,6 +160,36 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
+    name: ProjectType.WEB_COMPONENTS,
+    files: {
+      'package.json': {
+        dependencies: {
+          'lit-html': '1.4.1',
+        },
+      },
+    },
+  },
+  {
+    name: ProjectType.WEB_COMPONENTS,
+    files: {
+      'package.json': {
+        dependencies: {
+          'lit-html': '2.0.0-rc.3',
+        },
+      },
+    },
+  },
+  {
+    name: ProjectType.WEB_COMPONENTS,
+    files: {
+      'package.json': {
+        dependencies: {
+          lit: '2.0.0-rc.2',
+        },
+      },
+    },
+  },
+  {
     name: ProjectType.MITHRIL,
     files: {
       'package.json': {

@@ -15,7 +15,6 @@ import { map, skip } from 'rxjs/operators';
 import { ICollection } from '../types';
 import { STORY_PROPS } from './StorybookProvider';
 import { ComponentInputsOutputs, getComponentInputsOutputs } from './utils/NgComponentAnalyzer';
-import { RendererService } from './RendererService';
 
 const getNonInputsOutputsProps = (
   ngComponentInputsOutputs: ComponentInputsOutputs,
@@ -37,13 +36,18 @@ const getNonInputsOutputsProps = (
  * @param initialProps
  */
 export const createStorybookWrapperComponent = (
+  selector: string,
   template: string,
-  storyComponent: Type<unknown>,
+  storyComponent: Type<unknown> | undefined,
   styles: string[],
   initialProps?: ICollection
 ): Type<any> => {
+  // In ivy, a '' selector is not allowed, therefore we need to just set it to anything if
+  // storyComponent was not provided.
+  const viewChildSelector = storyComponent ?? '__storybook-noop';
+
   @Component({
-    selector: RendererService.SELECTOR_STORYBOOK_WRAPPER,
+    selector,
     template,
     styles,
   })
@@ -52,10 +56,13 @@ export const createStorybookWrapperComponent = (
 
     private storyWrapperPropsSubscription: Subscription;
 
-    @ViewChild(storyComponent ?? '', { static: true }) storyComponentElementRef: ElementRef;
+    @ViewChild(viewChildSelector, { static: true }) storyComponentElementRef: ElementRef;
 
-    @ViewChild(storyComponent ?? '', { read: ViewContainerRef, static: true })
+    @ViewChild(viewChildSelector, { read: ViewContainerRef, static: true })
     storyComponentViewContainerRef: ViewContainerRef;
+
+    // Used in case of a component without selector
+    storyComponent = storyComponent ?? '';
 
     // eslint-disable-next-line no-useless-constructor
     constructor(
